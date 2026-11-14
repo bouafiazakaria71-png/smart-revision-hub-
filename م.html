@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>راجع بذكاء - المنصة التعليمية الذكية للتعليم الثانوي في الجزائر</title>
+    <style>
+        :root {
+            --primary-color: #059669;
+            --secondary-color: #1e3a8a;
+            --accent-color: #f59e0b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        .dark-mode {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .toggle-theme {
+            background: none;
+            border: 1px solid var(--border-color);
+            font-size: 1.2rem;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: 2.8fr 1.2fr;
+            gap: 20px;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .levels-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .level-box {
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .level-box h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .streams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .stream-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .stream-card:hover {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo-container">
+                <span class="logo-icon">📖🌙🧠</span>
+                <div class="logo-text">
+                    <h1>راجع بذكاء</h1>
+                    <p>المنصة الجزائرية للتعليم الثانوي</p>
+                </div>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#">الرئيسية</a></li>
+                <li><a href="#levels">الأطوار والشعب</a></li>
+                <li><a href="#" id="adminPanelBtn" style="color:var(--accent-color); display:none;">⚙️ لوحة تحكم المسؤول</a></li>
+            </ul>
+
+            <div class="nav-buttons">
+                <button class="btn btn-primary" onclick="openModal('signupModal')">إنشاء حساب</button>
+                <button class="btn btn-secondary" onclick="openModal('loginModal')">تسجيل الدخول</button>
+                <button class="toggle-theme" id="themeBtn">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <main>
+            <section class="card" id="levels">
+                <h2>اختر الطور وشعبتك الدراسية</h2>
+                <div class="levels-container">
+                    <div class="level-box">
+                        <h3>📚 السنة الأولى ثانوي</h3>
+                        <div class="streams-grid">
+                            <div class="stream-card" onclick="alert('تم اختيار جذع مشترك علوم وتكنولوجيا')">جذع مشترك علوم وتكنولوجيا</div>
+                            <div class="stream-card" onclick="alert('تم اختيار جذع مشترك آداب وفلسفة')">جذع مشترك آداب وفلسفة</div>
+                        </div>
+                    </div>
+                    <div class="level-box">
+                        <h3>🎓 السنة الثالثة ثانوي (باك)</h3>
+                        <div class="streams-grid">
+                            <div class="stream-card" onclick="alert('تم اختيار شعبة علوم تجريبية')">علوم تجريبية</div>
+                            <div class="stream-card" onclick="alert('تم اختيار شعبة تسيير واقتصاد')">تسيير واقتصاد</div>
+                            <div class="stream-card" onclick="alert('تم اختيار شعبة آداب وفلسفة')">آداب وفلسفة</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <aside>
+            <div class="card">
+                <h2>لوحة تتبع التلميذ</h2>
+                <p id="userWelcomeText">أهلاً بك، <strong>زائر الكريم</strong></p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- نافذة إنشاء حساب -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
+            <h3>إنشاء حساب جديد</h3>
+            <input type="text" id="regName" placeholder="الاسم الكامل">
+            <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
+            <input type="password" id="regPass" placeholder="كلمة المرور">
+            <button class="btn btn-primary" style="width:100%;" onclick="registerUser()">تسجيل وحفظ</button>
+        </div>
+    </div>
+
+    <!-- نافذة تسجيل الدخول -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+            <h3>تسجيل الدخول</h3>
+            <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
+            <input type="password" id="loginPass" placeholder="كلمة المرور">
+            <button class="btn btn-secondary" style="width:100%;" onclick="loginUser()">دخول</button>
+            <small style="display:block; margin-top:10px; text-align:center; opacity:0.7;">للمسؤول: admin@raji.dz / admin2026</small>
+        </div>
+    </div>
+
+    <!-- نافذة لوحة تحكم المسؤول -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('adminModal')">&times;</span>
+            <h3>⚙️ لوحة تحكم المسؤول</h3>
+            <p>أهلاً بك زكرياء بوعافية. تم تفعيل صلاحيات الإشراف الكاملة بنجاح.</p>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if(modal) modal.style.display = 'flex';
+        }
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if(modal) modal.style.display = 'none';
+        }
+
+        const themeBtn = document.getElementById('themeBtn');
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            themeBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+
+        function registerUser() {
+            const name = document.getElementById('regName').value;
+            if(name) {
+                document.getElementById('userWelcomeText').innerHTML = 'مرحباً بك، <strong>' + name + '</strong>';
+                alert('تم إنشاء الحساب بنجاح!');
+                closeModal('signupModal');
+            } else {
+                alert('يرجى كتابة الاسم الكامل.');
+            }
+        }
+
+        function loginUser() {
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+            const pass = document.getElementById('loginPass').value;
+            
+            if(email === 'admin@raji.dz' && pass === 'admin2026') {
+                alert('مرحباً بك مجدداً أيها المسؤول (زكرياء بوعافية)!');
+                document.getElementById('adminPanelBtn').style.display = 'inline-block';
+                document.getElementById('userWelcomeText').innerHTML = 'مرحباً، <strong>المسؤول الرئيسي</strong>';
+                closeModal('loginModal');
+                openModal('adminModal');
+            } else if(email) {
+                document.getElementById('userWelcomeText').innerHTML = 'مرحباً بك، <strong>عضو المنصة</strong>';
+                alert('تم تسجيل الدخول بنجاح.');
+                closeModal('loginModal');
+            } else {
+                alert('يرجى إدخال البريد وكلمة المرور الصحيحة.');
+            }
+        }
+
+        document.getElementById('adminPanelBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal('adminModal');
+        });
+    </script>
+</body>
+</html>

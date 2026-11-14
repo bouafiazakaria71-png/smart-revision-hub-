@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>راجع بذكاء - المنصة التعليمية الذكية للتعليم الثانوي في الجزائر</title>
+    <style>
+        :root {
+            --primary-color: #059669;
+            --secondary-color: #1e3a8a;
+            --accent-color: #f59e0b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        .dark-mode {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .toggle-theme {
+            background: none;
+            border: 1px solid var(--border-color);
+            font-size: 1.2rem;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: 2.8fr 1.2fr;
+            gap: 20px;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .levels-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .level-box {
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .level-box h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .streams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .stream-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .stream-card:hover {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .modal-content input, .modal-content select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        /* AI Chat Widget */
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 320px;
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+            overflow: hidden;
+            z-index: 1500;
+        }
+
+        .ai-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .ai-body {
+            padding: 10px;
+            height: 180px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .ai-msg {
+            padding: 6px 10px;
+            border-radius: 6px;
+            max-width: 85%;
+        }
+
+        .ai-msg.bot {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            align-self: flex-start;
+        }
+
+        .ai-msg.user {
+            background: var(--primary-color);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .ai-controls {
+            padding: 8px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 5px;
+            background: var(--card-bg);
+        }
+
+        .ai-controls input {
+            flex: 1;
+            padding: 6px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo-container">
+                <span class="logo-icon">📖</span>
+                <div class="logo-text">
+                    <h1>راجع بذكاء</h1>
+                    <p>المنصة الجزائرية للثانوي</p>
+                </div>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#">الرئيسية</a></li>
+                <li><a href="#levels">الأطوار</a></li>
+                <li><a href="#" id="adminPanelBtn" style="color:var(--accent-color); display:none;">⚙️ لوحة الإدارة</a></li>
+            </ul>
+
+            <div class="nav-buttons">
+                <button class="btn btn-primary" id="openSignupBtn">إنشاء حساب</button>
+                <button class="btn btn-secondary" id="openLoginBtn">دخول</button>
+                <button class="toggle-theme" id="themeBtn">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <main>
+            <section class="card" id="levels">
+                <h2>اختر الطور وشعبتك الدراسية</h2>
+                <div class="levels-container">
+                    <div class="level-box">
+                        <h3>📚 السنة الأولى ثانوي</h3>
+                        <div class="streams-grid">
+                            <div class="stream-card" onclick="alert('تم تفعيل جذع مشترك علوم وتكنولوجيا')">علوم وتكنولوجيا</div>
+                            <div class="stream-card" onclick="alert('تم تفعيل جذع مشترك آداب وفلسفة')">آداب وفلسفة</div>
+                        </div>
+                    </div>
+                    <div class="level-box">
+                        <h3>🎓 السنة الثالثة ثانوي (بكالوريا)</h3>
+                        <div class="streams-grid">
+                            <div class="stream-card" onclick="alert('تم تفعيل شعبة علوم تجريبية')">علوم تجريبية</div>
+                            <div class="stream-card" onclick="alert('تم تفعيل شعبة تسيير واقتصاد')">تسيير واقتصاد</div>
+                            <div class="stream-card" onclick="alert('تم تفعيل شعبة آداب وفلسفة')">آداب وفلسفة</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <aside>
+            <div class="card">
+                <h2>لوحة تتبع التلميذ</h2>
+                <p id="userWelcomeText">أهلاً بك، <strong>زائر الكريم</strong></p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- نافذة إنشاء حساب -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeSignup">&times;</span>
+            <h3>إنشاء حساب جديد</h3>
+            <input type="text" id="regName" placeholder="الاسم الكامل">
+            <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
+            <input type="password" id="regPass" placeholder="كلمة المرور">
+            <button class="btn btn-primary" style="width:100%;" id="submitRegBtn">تسجيل وحفظ</button>
+        </div>
+    </div>
+
+    <!-- نافذة تسجيل الدخول -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeLogin">&times;</span>
+            <h3>تسجيل الدخول</h3>
+            <input type="email" id="loginEmail" placeholder="البريد الإلكتروني (admin@raji.dz)">
+            <input type="password" id="loginPass" placeholder="كلمة المرور (admin2026)">
+            <button class="btn btn-secondary" style="width:100%;" id="submitLoginBtn">دخول</button>
+            <small style="display:block; margin-top:10px; text-align:center; opacity:0.7;">للمسؤول: admin@raji.dz / admin2026</small>
+        </div>
+    </div>
+
+    <!-- لوحة تحكم المسؤول -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeAdmin">&times;</span>
+            <h3>⚙️ لوحة تحكم المسؤول</h3>
+            <p>أهلاً بك **زكرياء بوعافية**. تم تفعيل صلاحيات الإشراف والتحكم الكامل بنجاح.</p>
+        </div>
+    </div>
+
+    <!-- المساعد الذكي -->
+    <div class="ai-chat-widget">
+        <div class="ai-header">
+            <span>🤖 مساعد راجع الذكي</span>
+            <span>🟢</span>
+        </div>
+        <div class="ai-body" id="chatBody">
+            <div class="ai-msg bot">مرحباً! اسألني عن أي درس أو تمرين في المنهاج الجزائري.</div>
+        </div>
+        <div class="ai-controls">
+            <input type="text" id="aiInput" placeholder="اكتب سؤالك...">
+            <button class="btn btn-primary" id="sendAiBtn" style="padding:6px 10px; font-size:0.8rem;">إرسال</button>
+        </div>
+    </div>
+
+    <script>
+        // دوال التحكم الآمنة بالنوافذ
+        const signupModal = document.getElementById('signupModal');
+        const loginModal = document.getElementById('loginModal');
+        const adminModal = document.getElementById('adminModal');
+
+        document.getElementById('openSignupBtn').onclick = () => signupModal.style.display = 'flex';
+        document.getElementById('closeSignup').onclick = () => signupModal.style.display = 'none';
+
+        document.getElementById('openLoginBtn').onclick = () => loginModal.style.display = 'flex';
+        document.getElementById('closeLogin').onclick = () => loginModal.style.display = 'none';
+
+        document.getElementById('closeAdmin').onclick = () => adminModal.style.display = 'none';
+        document.getElementById('adminPanelBtn').onclick = (e) => {
+            e.preventDefault();
+            adminModal.style.display = 'flex';
+        };
+
+        // الثيم الليلي والنهاري
+        const themeBtn = document.getElementById('themeBtn');
+        themeBtn.onclick = () => {
+            document.body.classList.toggle('dark-mode');
+            themeBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        };
+
+        // تسجيل حساب جديد
+        document.getElementById('submitRegBtn').onclick = () => {
+            const name = document.getElementById('regName').value.trim();
+            if(name) {
+                document.getElementById('userWelcomeText').innerHTML = 'مرحباً بك، <strong>' + name + '</strong>';
+                alert('تم إنشاء الحساب بنجاح!');
+                signupModal.style.display = 'none';
+            } else {
+                alert('يرجى كتابة الاسم الكامل.');
+            }
+        };
+
+        // تسجيل الدخول (مع دعم حساب المسؤول)
+        document.getElementById('submitLoginBtn').onclick = () => {
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+            const pass = document.getElementById('loginPass').value.trim();
+            
+            if(email === 'admin@raji.dz' && pass === 'admin2026') {
+                alert('مرحباً بك مجدداً أيها المسؤول (زكرياء بوعافية)!');
+                document.getElementById('adminPanelBtn').style.display = 'inline-block';
+                document.getElementById('userWelcomeText').innerHTML = 'مرحباً، <strong>المسؤول الرئيسي</strong>';
+                loginModal.style.display = 'none';
+                adminModal.style.display = 'flex';
+            } else if(email) {
+                document.getElementById('userWelcomeText').innerHTML = 'مرحباً بك، <strong>عضو المنصة</strong>';
+                alert('تم تسجيل الدخول بنجاح.');
+                loginModal.style.display = 'none';
+            } else {
+                alert('يرجى إدخال البريد وكلمة المرور.');
+            }
+        };
+
+        // المساعد الذكي
+        document.getElementById('sendAiBtn').onclick = () => {
+            const input = document.getElementById('aiInput');
+            const chatBody = document.getElementById('chatBody');
+            if(input.value.trim() === '') return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'ai-msg user';
+            userMsg.textContent = input.value;
+            chatBody.appendChild(userMsg);
+
+            const query = input.value;
+            input.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'ai-msg bot';
+                botMsg.textContent = 'بناءً على المنهاج الجزائري لـ "' + query + '": الإجابة تعتمد على المنهجية الرسمية للبكالوريا.';
+                chatBody.appendChild(botMsg);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 800);
+        };
+    </script>
+</body>
+</html>
